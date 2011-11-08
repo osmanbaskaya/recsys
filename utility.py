@@ -5,7 +5,12 @@ import scipy.linalg as linalg
 from math import acos
 import numpy as np
 from scipy.stats.stats import ss
+from functools import wraps
 
+
+parallel_dict = dict()
+
+parallel_programming = True
 
 # Evaluation Metrics
 
@@ -21,9 +26,30 @@ def mae(a, b):
 
     return error
 
+# Decorator
+
+
+def parallel_distance(func):
+    if parallel_programming:
+        @wraps(func)
+        def parallel_d(*args, **kwargs):
+            sign = kwargs['signature']
+            if sign in parallel_dict:
+                r = parallel_dict[sign]
+                return r
+                #print "gotcha", sign
+            r = func(*args, **kwargs)
+            parallel_dict[sign] = r
+            return r
+        return parallel_d
+    else:
+        return func
+
+
 # Similarity Metrics
 
-def sim_cosine(a, b):
+@parallel_distance
+def sim_cosine(a, b, signature=None):
     """
     input:
     output:
@@ -34,7 +60,8 @@ def sim_cosine(a, b):
     degree = acos(val)
     return degree
 
-def sim_pearson(a, b):
+@parallel_distance
+def sim_pearson(a, b, signature=None):
 
     mean_a = a.mean()
     mean_b = b.mean()
@@ -45,12 +72,14 @@ def sim_pearson(a, b):
     return max(min(r, 1.0), -1.0)
 
 
-def euclidean(a, b):
+@parallel_distance
+def euclidean(a, b, signature=None):
     
     val = np.sqrt(np.add.reduce((a - b)**2))
     return val
 
-def hamming(a, b):
+@parallel_distance
+def hamming(a, b, signature=None):
     
     n = len(a)
     counter = 0
@@ -60,8 +89,17 @@ def hamming(a, b):
             counter += 1
     return counter
 
-
 def normalize(X):
     X_m = X - X.mean(axis=0)
     X_n = X_m / X.std(axis=0)
     return X_n
+
+
+def get_parallel_dict():
+    return parallel_dict
+
+# Decorators:
+
+
+
+
