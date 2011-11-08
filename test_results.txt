@@ -1,3 +1,4 @@
+[percentage_of_testset, number_of_neighbors]    error [mae]
 [30, 3]	0.932445207855
 [30, 5]	0.893955461294
 [30, 7]	0.896083926678
