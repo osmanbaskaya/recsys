@@ -9,9 +9,9 @@ from functools import wraps
 
 
 
-parallel_programming = True
+dynamic_programming = True
 
-if parallel_programming:
+if dynamic_programming:
     p_dist = dict()
 
 # Evaluation Metrics
@@ -37,10 +37,10 @@ def precision(a, b):
 
 # Decorator
 
-#def parallel_distance(func):
-    #if parallel_programming:
+#def dynamic_distance(func):
+    #if dynamic_programming:
         #@wraps(func)
-        #def parallel_d(*args, **kwargs):
+        #def dynamic_d(*args, **kwargs):
             #sign = kwargs['signature']
             #if sign in p_dist:
                 #r = p_dist[sign]
@@ -49,17 +49,17 @@ def precision(a, b):
             #r = func(*args, **kwargs)
             #p_dist[sign] = r
             #return r
-        #return parallel_d
+        #return dynamic_d
     #else:
         #return func
 
 #(args, tuple(sorted(kwargs.iteritems()))) 
 
-def parallel_prog(hashtable):
+def dynamic_prog(hashtable):
     def wrapper(func):
-        if parallel_programming:
+        if dynamic_programming:
             @wraps(func)
-            def parallel_p(*args, **kwargs):
+            def dynamic_p(*args, **kwargs):
                 sign = kwargs.get('signature')
                 if sign is not None:
                     if sign in hashtable:
@@ -68,17 +68,17 @@ def parallel_prog(hashtable):
                 r = func(*args, **kwargs)
                 hashtable[sign] = r # register for future hits.
                 return r
-            return parallel_p
+            return dynamic_p
         else:
             return func
     return wrapper
 
 
-#def parallel_prog(hashtable):
+#def dynamic_prog(hashtable):
     #def wrapper(func):
-        #if parallel_programming:
+        #if dynamic_programming:
             #@wraps(func)
-            #def parallel_p(*args, **kwargs):
+            #def dynamic_p(*args, **kwargs):
                 #sign = tuple(args) 
                 #print type(sign)
                 #if sign in hashtable:
@@ -87,15 +87,15 @@ def parallel_prog(hashtable):
                 #r = func(*args, **kwargs)
                 #hashtable[tuple(sign)] = r # register for future hits.
                 #return r
-            #return parallel_p
+            #return dynamic_p
         #else:
             #return func
     #return wrapper
 
-#def parallel_prog(func):
-    #if parallel_programming:
+#def dynamic_prog(func):
+    #if dynamic_programming:
         #@wraps(func)
-        #def parallel_p(*args, **kwargs):
+        #def dynamic_p(*args, **kwargs):
             #sign = kwargs['signature']
             #if sign in hashtable:
                 #r = hashtable[sign] # hit.
@@ -104,13 +104,13 @@ def parallel_prog(hashtable):
             #r = func(*args, **kwargs)
             #hashtable[sign] = r # register for future hits.
             #return r
-        #return parallel_p
+        #return dynamic_p
     #else:
         #return func
 
 
 # Similarity Metrics
-@parallel_prog(p_dist)
+@dynamic_prog(p_dist)
 def sim_cosine(a, b, signature=None):
     """
     input:
@@ -123,7 +123,7 @@ def sim_cosine(a, b, signature=None):
     return degree
 
 
-@parallel_prog(p_dist)
+@dynamic_prog(p_dist)
 def sim_pearson(a, b, signature=None):
 
     mean_a = a.mean()
@@ -135,13 +135,13 @@ def sim_pearson(a, b, signature=None):
     return max(min(r, 1.0), -1.0)
 
 
-@parallel_prog(p_dist)
+@dynamic_prog(p_dist)
 def euclidean(a, b, signature=None):
     
     val = np.sqrt(np.add.reduce((a - b)**2))
     return val
 
-@parallel_prog(p_dist)
+@dynamic_prog(p_dist)
 def hamming(a, b, signature=None):
     
     n = len(a)

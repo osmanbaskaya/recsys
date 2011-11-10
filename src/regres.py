@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 from base import BaseEstimator
-from utility import sim_cosine, parallel_prog
+from utility import dynamic_prog
 import numpy as np
 from sys import stderr
 
@@ -37,8 +37,8 @@ class KNeighborRegressor(BaseEstimator):
             stderr.write("Unrecognized method used to calculate rating\n")
             exit(1)
 
-    @parallel_prog(p_predict)
-    def predict(self, u, item):
+    @dynamic_prog(p_predict)
+    def predict(self, u, item, signature=None):
         
         neighbors = self.find_neighbors(u, item)
 

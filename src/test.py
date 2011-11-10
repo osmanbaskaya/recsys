@@ -9,12 +9,12 @@ import cProfile
 def main():
     f = open('../test_results.txt', 'a+')
     k_val = [5]
-    per = [30]
+    per = [1.4]
     #k_val = [3, 9, 13, 17, 21]
     iterate = product(per, k_val)
     for per, k in iterate:
         f.write(str([per, k]) + '\t')
-        e = Evaluater('u.data', k=k, test_percentage=per)
+        e = Evaluater('u.data', k=k, test_percentage=per, eval_metric='pr')
         f.write(str(e.evaluate()) + '\n')
     f.close()
 

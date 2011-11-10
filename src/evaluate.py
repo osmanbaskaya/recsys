@@ -6,10 +6,11 @@ from utility import mae, sim_cosine
 import numpy as np
 from regres import KNeighborRegressor
 from evalmetrics import PrecisionRecall
+from sys import stderr
 
 class Evaluater(object):
 
-    def __init__(self, datafile, eval_metric=mae,
+    def __init__(self, datafile, eval_metric='mae',
                         k=5, sim_method=sim_cosine, test_percentage=30):
 
         self.datafile = datafile
@@ -26,6 +27,8 @@ class Evaluater(object):
         self.rec = None
         #FIXME
         self.prepareEvaluater()
+        print self
+        print '\n'
 
     def prepareEvaluater(self):
         self.dataset = dataload.get_dataset(self.datafile)
@@ -83,21 +86,30 @@ class Evaluater(object):
 
 
 
-    def __calc_pr(self, test_db, k=1, N=20, I=1000):
+    def __calc_pr(self, test_db, k=1, N=20, I=300):
         #TODO args, kwargs
         pr = PrecisionRecall(self.dataset, test_db, N, I)
-        pression_recall = []
-        for user in test_db.iterkeys():
-            
+        rating_list = []
+        actual_testset = pr.get_important_items_from_testset() # This item is high rated by users.
+        #print 'Actual Length of the Testset%s\n' % actual_testset
+        for user, item in actual_testset:
+            print "\nNew test for user_id=%s, item_id=%s\n" % (user, item)
+            unrev_items = pr.get_unrelevant_items(user)
+            unrev_items.append(item) # added our relevant item for prediction
+            assert len(unrev_items) == I + 1
+            for item in unrev_items:
+                key = str(user) + '_' + str(item)
+                rating = self.rec.predict(user, item, signature=key)
+                rating_list.append([item, rating])
+            topNList = pr.create_topN_list(rating_list)
+            pr.use_for_pr(topNList, item) # use this inf. for calculating PR
 
-            
-            precision, recall = pr.evaulate_pr()
-
+        precision, recall = pr.evaluate_pr(topNList, item)
         return precision, recall
         
 
 
-    def evaluate(self, k=1, N=20, I=1000):
+    def evaluate(self, k=1, N=20, I=300):
 
         """
             Input:
@@ -105,17 +117,21 @@ class Evaluater(object):
                    most. (Only for Precision & Recall)
         """
 
-        test_db = dataload.read_data_to_hash(self.testset)[0]
-
-
-        if self.eval_metric.func_name == mae.func_name: 
+        test_db, test_idb, m = dataload.read_data_to_hash(self.testset)
+        
+        if self.eval_metric == 'mae':
             return self.__calc_mae(test_db)
         elif self.eval_metric == 'pr': # precision & Recall
-            print 'pr'
-            return self.__calc.pr(test_db, k, N, I)
+            return self.__calc_pr((test_db, test_idb), k, N, I)
         else:
-            print "BURADA"
-            
+            stderr.write("There is no such evaluation metric you can use")
+            exit(1) 
 
+    def __str__(self):
+        p = self.per
+        d_f = self.datafile
+        k = self.k
+        sim = self.sim_method.func_name
+        return 'Evaluater\nDatafile:%s\ntest_percentage:%s\nk:%s\nSimilarity Method:%s' % (d_f,p,k,sim)
 
 
