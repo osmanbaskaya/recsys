@@ -2,9 +2,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
 from base import BaseEstimator
-from utility import sim_cosine
+from utility import sim_cosine, parallel_prog
 import numpy as np
 from sys import stderr
+
+
+p_predict = dict() # for parallel programming
 
 class KNeighborRegressor(BaseEstimator):
     
@@ -34,6 +37,7 @@ class KNeighborRegressor(BaseEstimator):
             stderr.write("Unrecognized method used to calculate rating\n")
             exit(1)
 
+    @parallel_prog(p_predict)
     def predict(self, u, item):
         
         neighbors = self.find_neighbors(u, item)
@@ -46,7 +50,9 @@ class KNeighborRegressor(BaseEstimator):
 
         n_list = self.find_distances(u, neighbors)
         rating = self.calculate_rating(n_list)
+        print p_predict
         return rating
+
 
     def __str__(self):
         s = "\n### KNeighborRegressor ###\nDetails:\nk : %s,\nsim_method :" + \

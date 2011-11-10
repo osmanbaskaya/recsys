@@ -1,19 +1,24 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-
-from dataload import read_data_to_hash
-from regres import KNeighborRegressor
-from utility import euclidean, sim_pearson
-
-db, idb, movies  = read_data_to_hash()
-r = KNeighborRegressor(db, idb, movies, k=5)
-print r
-print r.predict(1, 2)
-
-#def main():
-    #pass
+from evaluate import Evaluater
+from itertools import product
+import cProfile
 
 
-#if __name__ == '__main__':
-    #main()
+def main():
+    f = open('test_results.txt', 'a+')
+    k_val = [5]
+    per = [30]
+    #k_val = [3, 9, 13, 17, 21]
+    iterate = product(per, k_val)
+    for per, k in iterate:
+        f.write(str([per, k]) + '\t')
+        e = Evaluater('u.data', k=k, test_percentage=per)
+        f.write(str(e.evaluate()) + '\n')
+    f.close()
+
+
+if __name__ == '__main__':
+    #cProfile.run('main()')
+    main()

@@ -3,7 +3,7 @@
 
 
 from __future__ import division
-from utility import sim_cosine, get_parallel_dict
+from utility import sim_cosine, get_p_dist
 import numpy as np
 from adapter import MovieLensAdapter
 
@@ -20,7 +20,7 @@ class BaseEstimator(object):
         self.idb = idb
         self.r_method = r_method
         self.adapt = MovieLensAdapter(self.db, self.idb) # adapter
-        self.parallel = get_parallel_dict()
+        self.parallel = get_p_dist()
 
 
     def find_neighbors(self, e, item):

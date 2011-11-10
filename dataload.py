@@ -85,10 +85,9 @@ def load_sll_data(filename):
         return load(f)
 
 def main():
+    #TODO: raise Error
     pass
-    #users, movies = read_data_to_hash('u.data')
-    #make_serial(users, 'users.sll')
-    #make_serial(movies, 'movies.sll')
+    
 
 if __name__ == '__main__':
     main()
