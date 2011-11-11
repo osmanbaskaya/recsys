@@ -62,7 +62,7 @@ class BaseEstimator(object):
         #n_neighbors = n_list[I, :]
         n_neighbors = sorted(n_list, key=itemgetter(1))
         try:
-            k = n_neighbors[:self.k, :]
+            k = n_neighbors[:self.k]
         except IndexError:
             print 'IndexError'
             exit()
