@@ -18,7 +18,7 @@ def main():
         timestamp = strftime("%Y-%m-%d %H:%M:%S", gmtime())
         f.write("New test on: " + timestamp + ' --> ')
         e = Evaluater('u.data', k=k, test_percentage=per, eval_metric='mae')
-        f.write(str([per, k, e.eval_metric]) + '\t')
+        f.write(str([per, k, e.eval_metric, e.sim_method.func_name]) + ' Error: ')
         f.write(str(e.evaluate()) + '\n')
     f.close()
 
