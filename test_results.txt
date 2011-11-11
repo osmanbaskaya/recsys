@@ -54,5 +54,4 @@ New test on: 2011-11-11 21:55:27 --> [30, 5, 'mae']	0.885138004246
 New test on: 2011-11-11 21:57:25 --> [30, 5, 'mae', 'sim_cosine']	0.9137479757
 New test on: 2011-11-11 21:58:15 --> [30, 5, 'mae', 'sim_cosine'] Error:0.902643948296
 New test on: 2011-11-11 21:59:13 --> [30, 5, 'mae', 'sim_cosine'] Error: 0.911628681861
-New test on: 2011-11-11 22:02:22 --> [30, 5, 'mae', 'sim_cosine'] Error: New test on: 2011-11-11 22:03:11 --> [30, 5, 'mae', 'sim_cosine'] Error: 0.877042125809
-New test on: 2011-11-11 22:05:20 --> [30, 5, 'mae', 'sim_cosine'] Error: 0.873146429834
+New test on: 2011-11-11 22:35:28 --> [30, 5, 'mae', 'sim_cosine'] Error: 0.917429966419
