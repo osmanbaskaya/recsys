@@ -8,7 +8,7 @@ from time import gmtime, strftime
 
 
 def main():
-    f = open('../test_results.txt', 'a+')
+    f = open('../testres.txt', 'a+')
     k_val = [5]
     per = [30]
     #per = [1.4]
