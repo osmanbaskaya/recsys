@@ -5,6 +5,7 @@
 from __future__ import division
 from utility import sim_cosine, get_p_dist
 import numpy as np
+from operator import itemgetter
 from adapter import MovieLensAdapter
 
 
@@ -43,29 +44,26 @@ class BaseEstimator(object):
         #mov_e = self.adapt.convertMovie2array(e)
         n_list = []
         for p_user, rating in potential_users.iteritems():
-            key = str(set([e, p_user]))
-            #if key in self.parallel:
-                #print "parallelized"
-                #return self.parallel[key]
+            #key = str(set([e, p_user]))
+            # the following key approach is faster than this above.
+            # but str approach is not feasible.
+            # You should change it with << operation.
+            key = '_'.join([str(e), str(potential_users)])
+            
             e_A, p_user_A = self.adapt.sim_prep(e, p_user,
                                               self.sim_method.func_name)
-            # If there is no item in common, no need to evaluate the distance
-            #if e_A.any():
-                #dist = self.sim_method(e_A, p_user_A, signature=key)
-                #n_list.append([p_user, dist, rating])
-            #if e_A is not None:
-                #dist = self.sim_method(e_A, p_user_A, signature=key)
-                #n_list.append([p_user, dist, rating])
             try:
                 dist = self.sim_method(e_A, p_user_A, signature=key)
                 n_list.append([p_user, dist, rating])
             except:
                 pass
-        n_list = np.array(n_list)
-        I = np.argsort(n_list[:, 1])  # sorting by distance
-        n_neighbors = n_list[I, :]
+        #n_list = np.array(n_list)
+        #I = np.argsort(n_list[:, 1])  # sorting by distance
+        #n_neighbors = n_list[I, :]
+        n_neighbors = sorted(n_list, key=itemgetter(1))
         try:
-            k = n_neighbors[:self.k, :]
+            #k = n_neighbors[:self.k, :]
+            k = n_neighbors[:self.k]
         except IndexError:
             print 'IndexError'
             exit()

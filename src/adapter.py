@@ -23,6 +23,7 @@ class MovieLensAdapter(object):
         self.idb = idb
 
     def get_common_elements(self, e1, e2):
+        # The switching from numpy to list gains 10 sec for exc. time
 
         common_items = []
         for item, rating in self.db[e1].iteritems():
@@ -33,13 +34,19 @@ class MovieLensAdapter(object):
 
     def sim_prep(self, e1, e2, sim_method):
         common = self.get_common_elements(e1, e2)
-        r1_A = r2_A = np.array([])
+        
+        #r1_A = r2_A = np.array([]) #So bad.
+        r1_A = []; r2_A = []
+
         if common:
             if sim_method == 'sim_cosine1':
                 pass
             elif sim_method in ('euclidean', 'sim_cosine',):
-                common_A = np.array(common)
-                r1_A, r2_A = common_A[:,1], common_A[:,2]
+                #common_A = np.array(common)
+                #r1_A, r2_A = common_A[:,1], common_A[:,2]
+                for k, i, j in common:
+                    r1_A.append(i)
+                    r2_A.append(j)
             elif sim_method in ('hamming',):
                 #FIXME:
                 common_A = np.array(common)

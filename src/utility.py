@@ -1,8 +1,8 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 from __future__ import division
-import scipy.linalg as linalg
-from math import acos
+#import scipy.linalg as linalg
+from math import acos, sqrt
 import numpy as np
 from scipy.stats.stats import ss
 from functools import wraps
@@ -11,8 +11,7 @@ from functools import wraps
 
 dynamic_programming = True
 
-if dynamic_programming:
-    p_dist = dict()
+p_dist = dict()
 
 # Evaluation Metrics
 
@@ -117,10 +116,17 @@ def sim_cosine(a, b, signature=None):
     output:
         -> degree: a float value. 0<= degree <= pi
     """
-    val = a.dot(b) / (linalg.norm(a)*linalg.norm(b))
-    val = max(min(1, val), 0) # avoiding to domain error.
-    degree = acos(val)
-    return degree
+    #val = a.dot(b) / (linalg.norm(a)*linalg.norm(b))
+    #val = max(min(1, val), 0) # avoiding to domain error.
+    #degree = acos(val)
+    #return degree
+    
+    # List approach (not using numpy)
+    c = sum([i * j for i,j in zip(a, b)])
+    a_n = sum([i * i for i in a])
+    b_n = sum([i * i for i in b])
+    return acos(c/(sqrt(a_n) * sqrt(b_n)))
+
 
 
 @dynamic_prog(p_dist)

@@ -28,8 +28,11 @@ class KNeighborRegressor(BaseEstimator):
 
 
         if self.r_method == 'uniform':
-            arr = n_list
-            return arr[:,2].mean()
+            #arr = n_list
+            #return arr[:,2].mean()
+            return sum([k for i,j,k in n_list])/len(n_list)
+
+
         elif self.r_method == 'distance':
             w_arr =  (1 / arr[:,1])
             return (w_arr * arr[:,2]).mean() / w_arr.sum()
