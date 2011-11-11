@@ -44,7 +44,7 @@ class KNeighborRegressor(BaseEstimator):
 
         if not neighbors:
             # There is no potential user in training data who watch this movie
-            mov_e = np.asarray(self.db[u].values())
+            mov_e = np.array(self.db[u].values())
             e_mean = mov_e.mean() # return the user`s average rating value
             return e_mean
 

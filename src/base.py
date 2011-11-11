@@ -50,10 +50,18 @@ class BaseEstimator(object):
             e_A, p_user_A = self.adapt.sim_prep(e, p_user,
                                               self.sim_method.func_name)
             # If there is no item in common, no need to evaluate the distance
-            if e_A.any():
+            #if e_A.any():
+                #dist = self.sim_method(e_A, p_user_A, signature=key)
+                #n_list.append([p_user, dist, rating])
+            #if e_A is not None:
+                #dist = self.sim_method(e_A, p_user_A, signature=key)
+                #n_list.append([p_user, dist, rating])
+            try:
                 dist = self.sim_method(e_A, p_user_A, signature=key)
                 n_list.append([p_user, dist, rating])
-        n_list = np.asarray(n_list)
+            except:
+                pass
+        n_list = np.array(n_list)
         I = np.argsort(n_list[:, 1])  # sorting by distance
         n_neighbors = n_list[I, :]
         try:
