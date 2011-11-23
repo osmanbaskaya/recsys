@@ -104,7 +104,7 @@ class Evaluater(object):
             topNList = pr.create_topN_list(rating_list)
             pr.use_for_pr(topNList, item) # use this inf. for calculating PR
 
-        precision, recall = pr.evaluate_pr(topNList, item)
+        precision, recall = pr.evaluate_pr()
         return precision, recall
         
 
