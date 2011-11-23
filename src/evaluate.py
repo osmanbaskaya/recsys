@@ -88,7 +88,8 @@ class Evaluater(object):
 
     def __calc_pr(self, test_db, k=1, N=20, I=300):
         #TODO args, kwargs
-        pr = PrecisionRecall(self.dataset, test_db, N, I)
+        #pr = PrecisionRecall(self.dataset, test_db, N, I)
+        pr = PrecisionRecall(self.trainset, test_db, N, I)
         rating_list = []
         actual_testset = pr.get_important_items_from_testset() # This item is high rated by users.
         #print 'Actual Length of the Testset%s\n' % actual_testset
