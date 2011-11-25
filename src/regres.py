@@ -42,6 +42,9 @@ class KNeighborRegressor(BaseEstimator):
         
         neighbors = self.find_neighbors(u, item)
 
+        if neighbors is None: # u is not in training db. 
+            return 3.5
+
         if not neighbors:
             # There is no potential user in training data who watch this movie
             mov_e = np.array(self.db[u].values())

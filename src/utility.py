@@ -35,26 +35,6 @@ def precision(a, b):
     pass
     
 
-# Decorator
-
-#def dynamic_distance(func):
-    #if dynamic_programming:
-        #@wraps(func)
-        #def dynamic_d(*args, **kwargs):
-            #sign = kwargs['signature']
-            #if sign in p_dist:
-                #r = p_dist[sign]
-                #print "gotcha", sign
-                #return r
-            #r = func(*args, **kwargs)
-            #p_dist[sign] = r
-            #return r
-        #return dynamic_d
-    #else:
-        #return func
-
-#(args, tuple(sorted(kwargs.iteritems()))) 
-
 def dynamic_prog(hashtable):
     def wrapper(func):
         if dynamic_programming:
@@ -73,46 +53,14 @@ def dynamic_prog(hashtable):
             return func
     return wrapper
 
-
-#def dynamic_prog(hashtable):
-    #def wrapper(func):
-        #if dynamic_programming:
-            #@wraps(func)
-            #def dynamic_p(*args, **kwargs):
-                #sign = tuple(args) 
-                #print type(sign)
-                #if sign in hashtable:
-                    #r = hashtable[sign] # hit.
-                    #return r
-                #r = func(*args, **kwargs)
-                #hashtable[tuple(sign)] = r # register for future hits.
-                #return r
-            #return dynamic_p
-        #else:
-            #return func
-    #return wrapper
-
-#def dynamic_prog(func):
-    #if dynamic_programming:
-        #@wraps(func)
-        #def dynamic_p(*args, **kwargs):
-            #sign = kwargs['signature']
-            #if sign in hashtable:
-                #r = hashtable[sign] # hit.
-                #print "gotcha", sign
-                #return r
-            #r = func(*args, **kwargs)
-            #hashtable[sign] = r # register for future hits.
-            #return r
-        #return dynamic_p
-    #else:
-        #return func
-
-
 # Similarity Metrics
+
 @dynamic_prog(p_dist)
-def sim_cosine(a, b, signature=None):
+def sim_adjcosine(a, b, signature=None): 
     """
+    This is the cosine similarity explaning with "Adjusted Cosine Similarity"
+    on RSH, p. 125
+    
     input:
     output:
         -> degree: a float value. 0<= degree <= pi
@@ -121,6 +69,11 @@ def sim_cosine(a, b, signature=None):
     val = max(min(1, val), 0) # avoiding to domain error.
     degree = acos(val)
     return degree
+
+@dynamic_prog(p_dist)
+def sim_cosine(a, b, signature=None):
+    
+
 
 
 @dynamic_prog(p_dist)

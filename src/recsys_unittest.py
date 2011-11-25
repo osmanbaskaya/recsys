@@ -7,7 +7,8 @@ import unittest
 from utility import *
 import numpy as np
 from math import sqrt
-
+from dataload import read_data_to_hash
+from adapter import MovieLensAdapter
 
 
 class similartyTest(unittest.TestCase):

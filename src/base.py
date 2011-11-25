@@ -12,12 +12,17 @@ from adapter import MovieLensAdapter
 class BaseEstimator(object):
 
     def __init__(self, db, idb=None, movies=None, k=5, sim_method=sim_cosine,
-                        r_method='uniform'):
+                        r_method='uniform', rec_type='ub'):
         self.k = k
         self.movies = movies
         self.sim_method = sim_method
-        self.db = db  # a dictionary for all items.
-        self.idb = idb
+        if rec_type == 'ub':
+            self.db = db  # a dictionary for all items.
+            self.idb = idb
+        else:
+            print "userbased"
+            self.db = idb
+            self.idb = db
         self.r_method = r_method
         self.adapt = MovieLensAdapter(self.db, self.idb) # adapter
         self.parallel = get_p_dist()

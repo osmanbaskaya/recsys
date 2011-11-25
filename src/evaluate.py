@@ -10,7 +10,7 @@ from sys import stderr
 
 class Evaluater(object):
 
-    def __init__(self, datafile, eval_metric='mae',
+    def __init__(self, datafile, rec_type='ub', eval_metric='mae',
                         k=5, sim_method=sim_cosine, test_percentage=30):
 
         self.datafile = datafile
@@ -18,6 +18,7 @@ class Evaluater(object):
         self.k = k
         self.sim_method = sim_method
         self.eval_metric = eval_metric
+        self.rec_type = rec_type
 
         # These will be initiated later.
         self.dataset = None
@@ -32,6 +33,15 @@ class Evaluater(object):
 
     def prepareEvaluater(self):
         self.dataset = dataload.get_dataset(self.datafile)
+        
+        #if self.rec_type == 'ub': # userbased
+            #self.dataset = dataload.get_dataset(self.datafile)
+        #elif self.rec_type == 'ib': # itembased
+            #pass
+        #else:
+            #stderr.write("Please enter ub [user-based] or ib [item-based]")
+            #exit(1)
+
         if self.dataset:
             self.__prepare_datasets()
         self.createRecSystem()
@@ -39,8 +49,9 @@ class Evaluater(object):
     def createRecSystem(self):
         
         db, idb, movies = dataload.read_data_to_hash(self.trainset)
+
         self.rec = KNeighborRegressor(db, idb, k=self.k, 
-                                        sim_method=self.sim_method)
+                    sim_method=self.sim_method, rec_type=self.rec_type)
         
 
 
@@ -81,6 +92,7 @@ class Evaluater(object):
             rating_list.append([rating, itemRating.values()[0]])
 
         rating_array = np.array(rating_list)
+        print "Number of key error: %s" % self.rec.adapt.numberOfKeyError
         #TODO: self.eval_metric?
         return mae(rating_array[:,0], rating_array[:,1])
 
