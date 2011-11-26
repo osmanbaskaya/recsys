@@ -46,13 +46,13 @@ class MovieLensAdapter(object):
             items.append(item)
         
         for item, rating2 in i_e2.iteritems():
-            if not item in items:
+            if item not in items:
                 if item in i_e1:
                     rating = i_e1[item]
                 else:
                     rating = 0
-            union_items.append([item, rating, rating2])
-            items.append(item)
+                union_items.append([item, rating, rating2])
+                items.append(item)
         return union_items
 
 
