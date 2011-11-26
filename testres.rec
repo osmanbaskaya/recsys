@@ -1,0 +1,25 @@
+5 test: 95 second
+New Item-based test on: u.data2011-11-26 08:09:55 --> [30, 5, 'mae', 'sim_cosine'] Error: 1.05927889714
+New Item-based test on: u.data2011-11-26 08:10:17 --> [30, 9, 'mae', 'sim_cosine'] Error: 0.990455991516
+New Item-based test on: u.data2011-11-26 08:10:38 --> [30, 13, 'mae', 'sim_cosine'] Error: 1.00624031324
+New Item-based test on: u.data2011-11-26 08:10:57 --> [30, 17, 'mae', 'sim_cosine'] Error: 1.00783254651
+New Item-based test on: u.data2011-11-26 08:11:16 --> [30, 21, 'mae', 'sim_cosine'] Error: 1.01038925287
+5 test: 175 second
+New User-based Test on: 2011-11-26 08:10:13 --> [30, 5, 'mae', 'sim_cosine'] Error: 0.885471898197
+New User-based Test on: 2011-11-26 08:11:00 --> [30, 9, 'mae', 'sim_cosine'] Error: 0.829248093723
+New User-based Test on: 2011-11-26 08:11:39 --> [30, 13, 'mae', 'sim_cosine'] Error: 0.780875381247
+New User-based Test on: 2011-11-26 08:12:12 --> [30, 17, 'mae', 'sim_cosine'] Error: 0.814926326732
+New User-based Test on: 2011-11-26 08:12:43 --> [30, 21, 'mae', 'sim_cosine'] Error: 0.832926016608
+
+New User-based Test on: 2011-11-26 08:15:24 --> [30, 10, 'mae', 'sim_cosine'] Error: 0.8495669848 >> 40sec
+New Item-based test on: u.data 2011-11-26 08:17:36 --> [30, 10, 'mae', 'sim_cosine'] Error: 1.01155885472 >20sec
+New Item-based test on: u.data 2011-11-26 08:18:27 --> [30, 50, 'mae', 'sim_cosine'] Error: 1.01304378116 >20sec
+
+New Item-based test on: u.data 2011-11-26 08:24:26 --> [1.3999999999999999, 5, 'pr', 'sim_cosine'] Error: (0.0013513513513513514, 0.027027027027027029)
+New User-based Test on: 2011-11-26 08:24:37 --> [1.3999999999999999, 5, 'pr', 'sim_cosine'] Error: (0.0015625000000000001, 0.03125)
+
+New Item-based test on: u1m.data 2011-11-26 09:23:02 --> [30, 5, 'mae', 'sim_cosine'] Error: 1.00973509934
+New Item-based test on: u1m.data 2011-11-26 09:27:28 --> [30, 9, 'mae', 'sim_cosine'] Error: 0.973068432671
+New Item-based test on: u1m.data 2011-11-26 09:32:03 --> [30, 13, 'mae', 'sim_cosine'] Error: 0.975073914145
+New Item-based test on: u1m.data 2011-11-26 09:36:27 --> [30, 17, 'mae', 'sim_cosine'] Error: 0.956252611544
+New Item-based test on: u1m.data 2011-11-26 09:43:17 --> [30, 5, 'mae', 'sim_cosine'] Error: 0.965342349958
