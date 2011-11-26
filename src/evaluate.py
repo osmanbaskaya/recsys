@@ -41,9 +41,8 @@ class Evaluater(object):
         #else:
             #stderr.write("Please enter ub [user-based] or ib [item-based]")
             #exit(1)
-
-        if self.dataset:
-            self.__prepare_datasets()
+        #if self.dataset:
+        self.__prepare_datasets()
         self.createRecSystem()
 
     def createRecSystem(self):
@@ -106,16 +105,19 @@ class Evaluater(object):
         actual_testset = pr.get_important_items_from_testset() # This item is high rated by users.
         #print 'Actual Length of the Testset%s\n' % actual_testset
         for user, item in actual_testset:
-            print "\nNew test for user_id=%s, item_id=%s\n" % (user, item)
+            #print "\nNew test for user_id=%s, item_id=%s\n" % (user, item)
             unrev_items = pr.get_unrelevant_items(user)
-            unrev_items.append(item) # added our relevant item for prediction
-            assert len(unrev_items) == I + 1
-            for item in unrev_items:
-                key = str(user) + '_' + str(item)
-                rating = self.rec.predict(user, item, signature=key)
-                rating_list.append([item, rating])
-            topNList = pr.create_topN_list(rating_list)
-            pr.use_for_pr(topNList, item) # use this inf. for calculating PR
+            
+            if unrev_items is not None:
+
+                unrev_items.append(item) # added our relevant item for prediction
+                assert len(unrev_items) == I + 1
+                for item in unrev_items:
+                    key = str(user) + '_' + str(item)
+                    rating = self.rec.predict(user, item, signature=key)
+                    rating_list.append([item, rating])
+                topNList = pr.create_topN_list(rating_list)
+                pr.use_for_pr(topNList, item) # use this inf. for calculating PR
 
         precision, recall = pr.evaluate_pr()
         return precision, recall
@@ -129,9 +131,9 @@ class Evaluater(object):
                 -> k: Number of item(s) which are/is the user appreciates
                    most. (Only for Precision & Recall)
         """
-
         test_db, test_idb, m = dataload.read_data_to_hash(self.testset)
-        
+        if self.rec_type == 'ib':
+            test_db, test_idb = test_idb, test_db
         if self.eval_metric == 'mae':
             return self.__calc_mae(test_db)
         elif self.eval_metric == 'pr': # precision & Recall

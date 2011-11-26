@@ -31,7 +31,8 @@ def read_data_to_hash(dataset='u.data', path=PATH, reverse_key=True,
     user_hash = dict()
     item_hash = dict()
     for line in data: 
-        user, item, rating, ts = line.split('\t')
+        #user, item, rating, ts = line.split('\t')
+        user, item, rating, ts = line.split('::')
         #TODO: Clean these mess
         item = int(item)
         user = int(user)
@@ -56,7 +57,8 @@ def get_dataset(datafile):
     except IOError as e:
         stderr.write("IOError for filename %s : %s\n" % (filename, e.strerror))
         print "Dataset has not been read yet. Please give another datafile"
-        return None
+        exit(1)
+        #return None
     return  f.readlines()
 
 

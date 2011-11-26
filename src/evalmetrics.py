@@ -72,8 +72,13 @@ class PrecisionRecall(object): #BaseMetrics.
             
             SORU : Tum set mi kullanilmali yoksa training set mi?
         """
-        user_item = set(self.idb[u].keys())
-        all_items = set(self.db.keys())
+        try:
+            user_item = set(self.idb[u].keys())
+            all_items = set(self.db.keys())
+        
+        except KeyError:
+            return None
+
         diff_items = list(all_items.difference(user_item))
         return diff_items[:self.I] # return I many of items.
 
@@ -112,13 +117,13 @@ class PrecisionRecall(object): #BaseMetrics.
         return self.precision, self.recall
         
     def use_for_pr(self, topNList, item):
-        print "#########topNList###########\n", topNList
+        #print "#########topNList###########\n", topNList
         if item in topNList:
             self.n_hit += 1
-            print 'hit for item:%s\n' % item
+            #print 'hit for item:%s\n' % item
         else:
             self.n_miss += 1
-            print 'miss for item:%s\n' % item
+            #print 'miss for item:%s\n' % item
 
 
     def __str__(self):

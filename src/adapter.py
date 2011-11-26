@@ -77,14 +77,16 @@ class MovieLensAdapter(object):
     def sim_prep(self, e1, e2, sim_method):
         r1_A = r2_A = np.array([])
 
-        if sim_method == 'sim_cosine':
+        #if sim_method == 'sim_cosine':
+        if sim_method == 'sim_cosine1':
             union = self.get_union(e1, e2)
             union_A = np.array(union)
             r1_A, r2_A = union_A[:,1], union_A[:,2]
         else:
             common = self.get_common_elements(e1, e2)
             if common:
-                if sim_method in ('euclidean', 'sim_adjcosine',):
+                #if sim_method in ('euclidean', 'sim_adjcosine',):
+                if sim_method in ('euclidean', 'sim_adjcosine', 'sim_cosine'):
                     common_A = np.array(common)
                     r1_A, r2_A = common_A[:,1], common_A[:,2]
                 elif sim_method in ('hamming',):

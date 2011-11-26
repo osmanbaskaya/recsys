@@ -20,7 +20,6 @@ class BaseEstimator(object):
             self.db = db  # a dictionary for all items.
             self.idb = idb
         else:
-            print "userbased"
             self.db = idb
             self.idb = db
         self.r_method = r_method
