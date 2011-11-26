@@ -1,0 +1,3 @@
+-> By the definition of the book, cosine similarity returns cosine value 
+rather than the angle between two vectors (users, items whatever.)
+Change it with value.

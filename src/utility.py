@@ -55,24 +55,39 @@ def dynamic_prog(hashtable):
 
 # Similarity Metrics
 
+#@dynamic_prog(p_dist)
+#def sim_adjcosine(a, b, signature=None): 
+    #"""
+    #This is the cosine similarity explaning with "Adjusted Cosine Similarity"
+    #on RSH, p. 125
+    
+    #input:
+    #output:
+        #-> degree: a float value. 0<= degree <= pi
+    #"""
+    #val = a.dot(b) / (linalg.norm(a)*linalg.norm(b))
+    #val = max(min(1, val), 0) # avoiding to domain error.
+    #degree = acos(val)
+    #return degree
+
 @dynamic_prog(p_dist)
-def sim_adjcosine(a, b, signature=None): 
+def sim_cosine(a, b, signature=None):
+
     """
-    This is the cosine similarity explaning with "Adjusted Cosine Similarity"
-    on RSH, p. 125
+    This is the cosine similarity. There is no distinct function such as
+    Adjusted Cosine or Cosine Similarity. Because they do same job.
+    Only one difference is vectors which are given. The former takes only
+    common elements which explained on RSH, p.125; latter one explaned on
+    RSH, p.124 takes all elements which is rated by at least one of the user.
     
     input:
     output:
-        -> degree: a float value. 0<= degree <= pi
+        -> degree: a float value. Intervals: 0<= degree <= pi
     """
     val = a.dot(b) / (linalg.norm(a)*linalg.norm(b))
     val = max(min(1, val), 0) # avoiding to domain error.
     degree = acos(val)
     return degree
-
-@dynamic_prog(p_dist)
-def sim_cosine(a, b, signature=None):
-    
 
 
 
